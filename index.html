@@ -603,6 +603,9 @@
         <a class="lt-action-btn" href="https://github.com/scobru/zenkeep" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" title="GitHub Repository scobru/zenkeep">
           <i class="ti ti-brand-github"></i>
         </a>
+        <button class="lt-action-btn hidden" id="share-page-btn" onclick="sharePage()" aria-label="Share Profile" title="Copy Profile Share Link">
+          <i class="ti ti-share"></i>
+        </button>
       </div>
       <div style="display: flex; gap: 8px;">
         <button class="lt-action-btn" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
@@ -799,8 +802,14 @@
       }, { authenticator: pair });
     }
 
+    let activePub = '';
+
     function loadNotes(pubKey) {
       if (!pubKey) return;
+      activePub = pubKey;
+      const sharePageBtn = document.getElementById('share-page-btn');
+      if (sharePageBtn) sharePageBtn.classList.remove('hidden');
+
       const container = document.getElementById('notes-container');
       container.innerHTML = '';
       const categories = {};
@@ -931,9 +940,44 @@
       window.location.reload();
     }
 
+    function sharePage() {
+      if (!activePub) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?pub=${activePub}`;
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showToast('Zen Keep link copied to clipboard!');
+      }).catch(() => {
+        const el = document.createElement('textarea');
+        el.value = shareUrl;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Zen Keep link copied to clipboard!');
+      });
+    }
+
+    function showToast(message) {
+      let toast = document.getElementById('toast-notification');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast-notification';
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `<i class="ti ti-circle-check" style="color: var(--accent);"></i> ${message}`;
+      // force reflow
+      toast.offsetHeight;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
     window.login = login;
     window.logout = logout;
     window.addNote = addNote;
+    window.sharePage = sharePage;
+    window.showToast = showToast;
 
     function openZoomModal(title, body, dateStr, pubKey, noteId) {
       document.getElementById('zoom-title').textContent = title;
