@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zen Keep | Scobru</title>
-  <meta name="description" content="Notes - Decentralized Thoughts & Ideas by Scobru.">
+  <meta name="description" content="Zen Keep - Decentralized Thoughts & Ideas by Scobru.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -596,17 +596,20 @@
 
     <!-- Top Nav Controls -->
     <div class="lt-top-bar">
-      <div>
+      <div style="display: flex; gap: 8px;">
         <a class="lt-action-btn" href="https://scobru.dev/" aria-label="Go Back" title="Go back to index">
           <i class="ti ti-arrow-left"></i>
+        </a>
+        <a class="lt-action-btn" href="https://github.com/scobru/zenkeep" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" title="GitHub Repository scobru/zenkeep">
+          <i class="ti ti-brand-github"></i>
         </a>
       </div>
       <div style="display: flex; gap: 8px;">
         <button class="lt-action-btn" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
           <i class="ti ti-asterisk"></i>
         </button>
-        <button class="lt-action-btn hidden" id="logout-btn" onclick="logout()" aria-label="Lock Notes"
-          title="Lock notes">
+        <button class="lt-action-btn hidden" id="logout-btn" onclick="logout()" aria-label="Lock Zen Keep"
+          title="Lock Zen Keep">
           <i class="ti ti-lock"></i>
         </button>
       </div>
@@ -620,7 +623,7 @@
       <h1 class="lt-name">Zen Keep</h1>
       <p class="lt-bio">Decentralized Thoughts &amp; Ideas</p>
       <div class="lt-meta-row">
-        <span class="lt-badge">DOC: NOTES.MD</span>
+        <span class="lt-badge">DOC: README.MD</span>
         <span class="lt-badge lt-badge-accent"><i class="ti ti-shield-check"></i> CRYPTO SECURE</span>
       </div>
     </header>
@@ -633,7 +636,7 @@
       </h2>
       <div class="lt-card-body hidden" id="auth-body">
         <p class="lt-card-desc"><i class="ti ti-key" style="color:var(--accent);"></i> Log in using Master Credentials
-          to write, edit, or delete notes.</p>
+          to write, edit, or delete thoughts.</p>
         <div class="lt-form-row">
           <input type="text" id="user-input" placeholder="Username" class="lt-input">
           <input type="password" id="pass-input" placeholder="Password" class="lt-input">
@@ -727,7 +730,7 @@
     } else {
       document.getElementById('notes-container').innerHTML = `
         <div class="lt-card-body" style="text-align: center; border: 1px dashed var(--accent); background: none;">
-          <p class="lt-card-desc" style="margin-bottom: 0;">Please authenticate to get started and write notes.</p>
+          <p class="lt-card-desc" style="margin-bottom: 0;">Please authenticate to get started and write thoughts.</p>
         </div>
       `;
     }
@@ -871,7 +874,7 @@
           e.stopPropagation();
           const shareUrl = `${window.location.origin}${window.location.pathname}?pub=${pubKey}&note=${id}`;
           navigator.clipboard.writeText(shareUrl).then(() => {
-            showToast('Note link copied to clipboard!');
+            showToast('Zen Keep link copied to clipboard!');
           }).catch(() => {
             // fallback
             const el = document.createElement('textarea');
@@ -880,7 +883,7 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            showToast('Note link copied to clipboard!');
+            showToast('Zen Keep link copied to clipboard!');
           });
         };
         card.appendChild(shareBtn);
@@ -978,7 +981,7 @@
     document.getElementById('modal-share-btn').addEventListener('click', () => {
       if (lastZoomedNoteUrl) {
         navigator.clipboard.writeText(lastZoomedNoteUrl).then(() => {
-          showToast('Note link copied to clipboard!');
+          showToast('Zen Keep link copied to clipboard!');
         }).catch(() => {
           const el = document.createElement('textarea');
           el.value = lastZoomedNoteUrl;
@@ -986,7 +989,7 @@
           el.select();
           document.execCommand('copy');
           document.body.removeChild(el);
-          showToast('Note link copied to clipboard!');
+          showToast('Zen Keep link copied to clipboard!');
         });
       }
     });
@@ -1005,7 +1008,7 @@
       <div class="modal-close" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
         <button class="bracket-btn" id="modal-share-btn"
           style="background: var(--accent); color: #fff; border: none; display: flex; align-items: center; gap: 6px;"><i
-            class="ti ti-share"></i> Share Note</button>
+            class="ti ti-share"></i> Share Zen Keep</button>
         <button class="bracket-btn" onclick="closeZoomModal()">Close</button>
       </div>
     </div>
