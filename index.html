@@ -713,6 +713,7 @@
     let pair;
     let isAuthenticated = false;
     let lastZoomedNoteUrl = '';
+    let activePub = '';
 
     const relays = ["wss://zen.akao.io:8420/zen", "wss://zen0.akao.io:8420/zen", "wss://zen1.akao.io:8420/zen"];
     localStorage.removeItem('zenPeers');
@@ -801,8 +802,6 @@
         }
       }, { authenticator: pair });
     }
-
-    let activePub = '';
 
     function loadNotes(pubKey) {
       if (!pubKey) return;
